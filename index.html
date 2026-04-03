@@ -3,198 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aliyə üçün Özəl ❤️</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <title>Aliyə & Turqan</title>
     <style>
-        :root {
-            --primary-pink: #ff758c;
-            --secondary-pink: #ff7eb3;
-            --text-color: #2d3436;
-        }
-
+        /* Ümumi tənzimləmələr */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            background: #ff9a9e;
+            background: linear-gradient(135deg, #fecfef 0%, #ff9a9e 99%, #fecfef 100%);
             display: flex;
             justify-content: center;
             align-items: center;
+            color: #fff;
         }
 
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 0;
-        }
-
-        .card {
-            position: relative;
-            z-index: 10;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 30px;
-            padding: 50px;
-            width: 80%;
-            max-width: 600px;
+        /* Sehifeler */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            box-shadow: 0 25px 45px rgba(0,0,0,0.1);
-            color: white;
-            display: none; /* JS ilə idarə olunacaq */
+            transition: transform 0.8s ease-in-out, opacity 0.8s ease;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
-        .card.active {
-            display: block;
+        #page2 {
+            transform: translateX(100%);
+            opacity: 0;
         }
 
+        .active#page1 {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .active#page2 {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .hidden {
+            transform: translateX(-100%) !important;
+            opacity: 0 !important;
+        }
+
+        /* Yazılar və Düymə */
         h1 {
-            font-size: 2.8rem;
+            font-size: 3rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
             margin-bottom: 20px;
-            font-weight: 700;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .typing-text {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            min-height: 100px;
-            margin-bottom: 30px;
+        p {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            max-width: 600px;
         }
 
         .btn {
-            background: white;
-            color: var(--primary-pink);
-            padding: 15px 45px;
+            background-color: #fff;
+            color: #ff4d6d;
+            padding: 15px 40px;
             border-radius: 50px;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: bold;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            font-size: 1.2rem;
         }
 
         .btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
-        /* Ürək animasiyası */
-        .floating-heart {
+        /* Animasiyalı Ürəklər */
+        .heart {
             position: absolute;
+            color: rgba(255, 255, 255, 0.6);
+            user-select: none;
             pointer-events: none;
-            opacity: 0.6;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
-            z-index: 1;
+            animation: move linear infinite;
         }
 
-        .highlight {
-            color: #fff;
-            font-weight: bold;
-            display: block;
-            margin-top: 15px;
-            font-size: 1.6rem;
-            text-decoration: underline;
+        @keyframes move {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
 
-    <canvas id="bg-canvas"></canvas>
-
-    <div id="step1" class="card active">
-        <h1 id="title1"></h1>
-        <div class="typing-text" id="text1"></div>
-        <button class="btn" onclick="goToStep2()">Mənim üçün çox önəmlisən...</button>
+    <div id="page1" class="page active">
+        <div class="container">
+            <h1>Salam, Mənim Dünyam.. ❤️</h1>
+            <p>Hər şeyə yenidən, daha gözəl başlamağa hazırsan?</p>
+            <br>
+            <button class="btn" onclick="nextPage()">Demək Başlayaq...</button>
+        </div>
     </div>
 
-    <div id="step2" class="card">
-        <h1 id="title2">Bağışla Məni... 🌹</h1>
-        <div class="typing-text" id="text2"></div>
-        <button class="btn" onclick="finalSurprise()">Səni Çox Sevirəm!</button>
+    <div id="page2" class="page">
+        <div class="container">
+            <h1>Bağışla Məni, Aliyə ❤️</h1>
+            <p>
+                Səni hər şeydən, hər kəsdən çox sevirəm. Bəzən səhv edə bilərəm, amma qəlbim həmişə sənə aiddir. 
+                Sənin gülüşün mənim üçün ən böyük xoşbəxtlikdir. <br><br>
+                <b>Səni Çox Sevirəm!</b> <br>
+                Həmişə yanımda qal, Turqanın tək eşqi...
+            </p>
+        </div>
     </div>
 
     <script>
-        // Yazı animasiyası funksiyası
-        function typeWriter(elementId, text, speed, callback) {
-            let i = 0;
-            const element = document.getElementById(elementId);
-            element.innerHTML = "";
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else if (callback) {
-                    callback();
-                }
-            }
-            type();
+        function nextPage() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page1').classList.remove('active');
+            document.getElementById('page2').classList.add('active');
         }
 
-        // İlkin yüklənmə
-        window.onload = () => {
-            typeWriter("title1", "Salam, Mənim Dünyam.. ❤️", 70, () => {
-                typeWriter("text1", "Hər şeyi kənara qoyub, sadəcə mənə qulaq asmağını istəyirəm. Səninlə keçən hər anım mənim üçün bir möcüzədir...", 40);
-            });
-            createFloatingHearts();
-        };
-
-        function goToStep2() {
-            gsap.to("#step1", {duration: 0.5, opacity: 0, scale: 0.8, display: "none", onComplete: () => {
-                const s2 = document.getElementById("step2");
-                s2.classList.add("active");
-                gsap.fromTo("#step2", {opacity: 0, scale: 1.2}, {duration: 0.8, opacity: 1, scale: 1});
-                
-                typeWriter("text2", "Səni incitdiyim hər saniyə üçün peşmanam. Sənin gülüşün mənim günəşimdir. Gəl bütün qaranlıqları geridə qoyaq və yenidən biz olaq. Sən mənim həyatımın mənasısan. ❤️", 40);
-            }});
-        }
-
-        function finalSurprise() {
-            // Ekranı ürəklərlə doldur
-            for(let i=0; i<50; i++) {
-                setTimeout(createSingleHeart, i * 100);
-            }
-            alert("Səni Dünyalar Qədər Sevirəm, Aliyə! ❤️");
-        }
-
-        // Arxa fon ürək effekti
-        function createSingleHeart() {
+        // Arxa fonda uçan ürəklər yaratmaq üçün funksiya
+        function createHeart() {
             const heart = document.createElement('div');
-            heart.classList.add('floating-heart');
+            heart.classList.add('heart');
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.top = '110vh';
-            heart.style.fontSize = (Math.random() * 30 + 10) + 'px';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
             document.body.appendChild(heart);
 
-            gsap.to(heart, {
-                y: '-120vh',
-                x: (Math.random() - 0.5) * 200,
-                rotation: Math.random() * 360,
-                duration: Math.random() * 3 + 2,
-                ease: "power1.out",
-                onComplete: () => heart.remove()
-            });
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
         }
 
-        function createFloatingHearts() {
-            setInterval(createSingleHeart, 400);
-        }
-
-        // Mouse hərəkətinə görə kartın tərpənməsi (Paralaks)
-        document.addEventListener("mousemove", (e) => {
-            const x = (window.innerWidth / 2 - e.pageX) / 25;
-            const y = (window.innerHeight / 2 - e.pageY) / 25;
-            gsap.to(".card", {rotationY: x, rotationX: y, ease: "power2.out", duration: 0.5});
-        });
-
+        setInterval(createHeart, 300);
     </script>
 </body>
 </html>
